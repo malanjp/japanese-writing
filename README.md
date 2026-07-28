@@ -102,14 +102,14 @@ git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-
 
 - https://www.anlp.jp/proceedings/annual_meeting/2010/pdf_dir/D3-7.pdf
 - 名古屋大学学術機関リポジトリ: https://nagoya.repo.nii.ac.jp/records/13301
-- 情報学広場: https://ipsj.ixsq.nii.ac.jp/records/69533
+- 村田匡輝, 大野誠寛, 松原茂樹, 言語処理学会年次大会発表論文集, 2010
 - 形態素、係り受け、節境界、読点間の距離を素性として読点位置を同定する統計的手法。
 
 **反映**: 読点の位置が文字数ではなく統語構造で決まるという前提を採用した。「読点は文字数ではなく、構造と誤読防止で決める」はこれに基づく。「N文字ごとに読点」のような規則は採らない。
 
 ### 4. k16shikano / japanese-tech-writing
 
-- https://gist.github.com/k16shikano/a47db88fa048086cf67949fb795b827f
+- https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d
 - 日本語の技術文書・書籍原稿の文章規範。整形、パラグラフライティング、論証の厳密さ、読み手の負荷の管理、視点と語り、演出の抑制、冗長の排除などを扱う。
 - ライセンス: Unlicense（公開ページの表示による）
 
@@ -117,7 +117,7 @@ git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-
 
 ### 5. k16shikano / cognitive-rhythm-writing
 
-- https://gist.github.com/k16shikano
+- https://gist.github.com/k16shikano/eb2929f13ed19c97188393d297be8432
 - 説明的な文章の緩急を、装飾ではなく認知モードの切替と未回収の緊張の管理として設計する規範。
 
 **反映**: 限定的に採用した。これは文章演出の実践的規範であり、一般文書に適用できる普遍的な可読性法則ではない。そのため、リズム調整をワークフローの最終工程かつ任意扱いとし、`genre-guidance.md` で解説記事・エッセイ以外の文書では適用強度を「弱」または「なし」とした。
@@ -125,7 +125,7 @@ git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-
 ### 6. textlint
 
 - https://github.com/textlint/textlint
-- https://textlint.github.io/
+- https://textlint.org/
 
 **反映**: 直接引用はしていない。決定的に検査できる表記・用語チェックを LLM に任せない、という役割分担の設計根拠として参照した。スキルは構造・論理・意味保持を担い、機械的な表記統一は静的検査に委ねる。
 
