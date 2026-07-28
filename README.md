@@ -16,9 +16,25 @@ japanese-writing/
     └── claude-tics.md              # 生成AI特有の日本語の癖と修正例
 ```
 
-## 使い方
+## インストール
 
-このディレクトリをリポジトリの `.claude/skills/japanese-writing`、またはユーザー全体で使う場合は `~/.claude/skills/japanese-writing` に配置する。
+ユーザー全体で使う場合は次のとおり。
+
+```
+git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-writing
+```
+
+特定のリポジトリでだけ使う場合は、clone 先を `.claude/skills/japanese-writing` にする。
+
+すでに手元に clone がある場合は、コピーではなく symlink を張ると更新が二重管理にならない。
+
+```
+ln -s /path/to/japanese-writing ~/.claude/skills/japanese-writing
+```
+
+配置後、Claude Code を再起動すると読み込まれる。
+
+## 使い方
 
 推敲、校正、リライトを依頼すると自動で参照される。スキル名を明示する必要はない。
 
