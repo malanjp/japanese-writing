@@ -134,3 +134,28 @@ git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-
 
 **反映**: 直接引用はしていない。決定的に検査できる表記・用語チェックを LLM に任せない、という役割分担の設計根拠として参照した。スキルは構造・論理・意味保持を担い、機械的な表記統一は静的検査に委ねる。
 
+### 7. Forest-Project-Lab / jp-writing-skills
+
+- https://github.com/Forest-Project-Lab/jp-writing-skills
+- 日本語の文章品質を検査する Claude Code 用プラグイン。設計根拠は `docs/DESIGN.md` にある。
+- ライセンス: MIT
+
+**反映**: このスキルとは独立に開発されたものだが、設計の骨格が一致していた。欠陥の検出と美的評価を分けること、確度によって〔指摘〕と〔助言〕を使い分けること、規則を検証可能性で階層化することの3点である。同じ結論に別経路で到達したことを、既存方針の裏づけとして扱う。
+
+音韻に関する判断を規則から外す根拠として、同リポジトリが引用する PhonologyBench を確認した。Suvarna, Khandelwal, Peng (2024) は、押韻語の生成で人間との差が 17 ポイント、音節数の計数で 45 ポイントあると報告している。リズムを固定ルールで規定しない方針を補強する。 https://arxiv.org/abs/2404.02456
+
+### 8. その他の日本語ライティング用スキル
+
+- https://github.com/sanoakr/ai-skills (`ja-proofreading`)
+- https://github.com/ultimatile/dotfiles (`.claude/skills/japanese-writing`)
+
+**反映**: 直接の採用はない。前者は検査を textlint に委譲する構成で、設計方針 4 と同じ役割分担を取る。後者は敬体・常体と句読点の選択を執筆前にユーザーへ確認して固定する手順を持つ。この手順は、文体の推定が結果を左右する場合の扱いとして再検討の余地がある。
+
+## 検証したが採用しなかった資料
+
+いずれも実在と書誌情報を確認した。文体を数量的に特徴づける研究であり、文章の欠陥を検出する目的には使えない。柴崎 (2014) が指摘する指標の限界と同じ理由による。
+
+- 「テキストの多様性をとらえる分類指標の体系化の試み (2)」言語処理学会年次大会 2012, P2-2. https://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/P2-2.pdf
+- 「小説における文体印象解析の試み」言語処理学会年次大会 2008, A2-1. https://www.anlp.jp/proceedings/annual_meeting/2008/pdf_dir/A2-1.pdf
+- 「統計分析からみた水村美苗著『続明暗』の文体模倣」計量国語学 32(1). https://www.jstage.jst.go.jp/article/mathling/32/1/32_19/_article/-char/ja/
+
