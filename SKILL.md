@@ -15,7 +15,7 @@ description: 日本語の文章を、意味を変えずに明確で読みやす�
 4. 係り受け、語彙、用語、表記を整える
 5. 最後に文長・文末・読点のリズムを控えめに調整する
 
-文体や意図的な反復を、読みやすさだけを理由に壊さない。文書種別ごとの適用範囲は [genre-guidance.md](references/genre-guidance.md) を参照する。
+文体や意図的な反復を、読みやすさだけを理由に壊さない。文書種別ごとの適用範囲は [genre-guidance.md](references/genre-guidance.md) を参照する。文書全体の骨格、見出し、段落の設計は [document-structure.md](references/document-structure.md) を参照する。
 
 ## 適用範囲
 
@@ -165,5 +165,6 @@ SNS、エッセイ、小説、日記では、断片文・省略・反復・常�
 
 ## 参照ファイル
 
+- [references/document-structure.md](references/document-structure.md) — 文書全体の構成、見出し、段落の設計
 - [references/genre-guidance.md](references/genre-guidance.md) — 文書種別ごとの編集強度
 - [references/claude-tics.md](references/claude-tics.md) — 生成AI特有の日本語の癖と修正例

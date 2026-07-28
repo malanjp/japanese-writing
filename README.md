@@ -11,9 +11,12 @@ japanese-writing/
 ├── SKILL.md                        # 編集ワークフロー、出力モード、安全上の境界
 ├── README.md                       # このファイル。概要、インストール、使用例、参考資料
 ├── CLAUDE.md                       # スキル開発・保守用。設計方針、既知の課題
-└── references/
-    ├── genre-guidance.md           # 文書種別ごとの編集強度
-    └── claude-tics.md              # 生成AI特有の日本語の癖と修正例
+├── references/
+│   ├── document-structure.md       # 文書全体の構成、見出し、段落の設計
+│   ├── genre-guidance.md           # 文書種別ごとの編集強度
+│   └── claude-tics.md              # 生成AI特有の日本語の癖と修正例
+└── docs/
+    └── document-structure-research.md  # 文書構成の規則の根拠と出典
 ```
 
 ## インストール
@@ -81,6 +84,8 @@ git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-
 意味・数値に関わる指摘を先頭に置き、表記の指摘を後ろに回す。実施日と計測値は原文にないため、補わずに確認事項として残している。
 
 ## 参考資料
+
+文書構成の規則については、別途調査した出典を [docs/document-structure-research.md](docs/document-structure-research.md) にまとめている。
 
 ### 1. 在留支援のためのやさしい日本語ガイドライン（文化庁）
 
