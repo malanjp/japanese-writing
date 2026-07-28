@@ -18,18 +18,25 @@ japanese-writing/
 
 ## インストール
 
-ユーザー全体で使う場合は次のとおり。
+[skills CLI](https://github.com/vercel-labs/skills) を使う。ユーザー全体で使う場合は `-g` を付ける。
+
+```
+npx skills add malanjp/japanese-writing -g -a claude-code
+```
+
+特定のリポジトリでだけ使う場合は `-g` を外す。`.claude/skills/` 配下に入る。
+
+更新と削除も CLI から行える。
+
+```
+npx skills update japanese-writing
+npx skills remove japanese-writing
+```
+
+CLI を使わない場合は、直接配置してもよい。
 
 ```
 git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-writing
-```
-
-特定のリポジトリでだけ使う場合は、clone 先を `.claude/skills/japanese-writing` にする。
-
-すでに手元に clone がある場合は、コピーではなく symlink を張ると更新が二重管理にならない。
-
-```
-ln -s /path/to/japanese-writing ~/.claude/skills/japanese-writing
 ```
 
 配置後、Claude Code を再起動すると読み込まれる。
