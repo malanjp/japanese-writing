@@ -16,6 +16,7 @@ japanese-writing/
 │   ├── genre-guidance.md           # 文書種別ごとの編集強度
 │   └── claude-tics.md              # 生成AI特有の日本語の癖と修正例
 └── docs/
+    ├── design-rationale.md         # 参考資料をどう設計に反映したか
     └── document-structure-research.md  # 文書構成の規則の根拠と出典
 ```
 
@@ -85,77 +86,49 @@ git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-
 
 ## 参考資料
 
-文書構成の規則については、別途調査した出典を [docs/document-structure-research.md](docs/document-structure-research.md) にまとめている。
+各資料をスキルにどう反映したかは [docs/design-rationale.md](docs/design-rationale.md) に記載する。
+文書構成の規則の根拠は [docs/document-structure-research.md](docs/document-structure-research.md) にまとめた。
 
-### 1. 在留支援のためのやさしい日本語ガイドライン（文化庁）
+### 日本語の文章規範
 
-- https://www.bunka.go.jp/seisaku/kokugo_nihongo/kyoiku/92484001.html
-- PDF: https://www.bunka.go.jp/seisaku/kokugo_nihongo/kyoiku/pdf/93869301_01.pdf
-- 出入国在留管理庁と文化庁が、有識者会議を経て作成した公的ガイドライン。
+- 在留支援のためのやさしい日本語ガイドライン（出入国在留管理庁・文化庁, 2020）
+  https://www.bunka.go.jp/seisaku/kokugo_nihongo/kyoiku/92484001.html
+  PDF: https://www.bunka.go.jp/seisaku/kokugo_nihongo/kyoiku/pdf/93869301_01.pdf
+- 柴崎秀子（2014）「リーダビリティー研究と「やさしい日本語」」日本語教育 158, pp.49-65
+  https://doi.org/10.20721/nihongokyoiku.158.0_49
+- 村田匡輝, 大野誠寛, 松原茂樹（2010）「日本語テキストにおける読点位置の検出」言語処理学会年次大会発表論文集
+  https://www.anlp.jp/proceedings/annual_meeting/2010/pdf_dir/D3-7.pdf
+  https://nagoya.repo.nii.ac.jp/records/13301
+- k16shikano / japanese-tech-writing（Unlicense）
+  https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d
+- k16shikano / cognitive-rhythm-writing（Unlicense）
+  https://gist.github.com/k16shikano/eb2929f13ed19c97188393d297be8432
 
-**反映**: 読み手の日本語習熟度を前提条件として扱う考え方を、「1. 前提を決める」に採用した。ただし、やさしい日本語は在留外国人への情報提供という特定用途の規範であり、技術文書や業務文書へ全面適用しない。専門用語を避けるのではなく定義して統一する方針は、この線引きによる。
+### ツール
 
-### 2. リーダビリティー研究と「やさしい日本語」（柴崎秀子, 2014）
+- textlint
+  https://github.com/textlint/textlint
+  https://textlint.org/
 
-- 『日本語教育』158, pp.49-65
-- https://www.jstage.jst.go.jp/article/nihongokyoiku/158/0/158_49/_article/-char/ja/
-- DOI: https://doi.org/10.20721/nihongokyoiku.158.0_49
+### 類似スキル
 
-**反映**: リーダビリティー指標がテキスト要因のみを対象とし、守備範囲に限界があるという指摘を採用した。文長、漢字密度、助詞の連続、文末の反復を「補助的な警告にとどめ、単独では誤りと断定しない」と定めた根拠がこれにあたる。数値指標を合否判定に使わない。
+- Forest-Project-Lab / jp-writing-skills（MIT）
+  https://github.com/Forest-Project-Lab/jp-writing-skills
+- sanoakr / ai-skills（`ja-proofreading`）
+  https://github.com/sanoakr/ai-skills
+- ultimatile / dotfiles（`.claude/skills/japanese-writing`）
+  https://github.com/ultimatile/dotfiles
 
-### 3. 日本語テキストにおける読点位置の検出
+### その他
 
-- https://www.anlp.jp/proceedings/annual_meeting/2010/pdf_dir/D3-7.pdf
-- 名古屋大学学術機関リポジトリ: https://nagoya.repo.nii.ac.jp/records/13301
-- 村田匡輝, 大野誠寛, 松原茂樹, 言語処理学会年次大会発表論文集, 2010
-- 形態素、係り受け、節境界、読点間の距離を素性として読点位置を同定する統計的手法。
+- Suvarna, A., Khandelwal, H., & Peng, N. (2024) PhonologyBench: Evaluating Phonological Skills of Large Language Models
+  https://arxiv.org/abs/2404.02456
 
-**反映**: 読点の位置が文字数ではなく統語構造で決まるという前提を採用した。「読点は文字数ではなく、構造と誤読防止で決める」はこれに基づく。「N文字ごとに読点」のような規則は採らない。
+### 採用しなかった資料
 
-### 4. k16shikano / japanese-tech-writing
-
-- https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d
-- 日本語の技術文書・書籍原稿の文章規範。整形、パラグラフライティング、論証の厳密さ、読み手の負荷の管理、視点と語り、演出の抑制、冗長の排除などを扱う。
-- ライセンス: Unlicense（公開ページの表示による）
-
-**反映**: LLM が生成しがちな内容のない定型句を独立した排除対象として扱う設計を採用し、`claude-tics.md` の第1節（語彙・言い回し）と第5節（検出しにくい癖）に展開した。段落ごとに主張を一つ置く方針は `genre-guidance.md` の解説記事の項に反映している。
-
-### 5. k16shikano / cognitive-rhythm-writing
-
-- https://gist.github.com/k16shikano/eb2929f13ed19c97188393d297be8432
-- 説明的な文章の緩急を、装飾ではなく認知モードの切替と未回収の緊張の管理として設計する規範。
-
-**反映**: 限定的に採用した。これは文章演出の実践的規範であり、一般文書に適用できる普遍的な可読性法則ではない。そのため、リズム調整をワークフローの最終工程かつ任意扱いとし、`genre-guidance.md` で解説記事・エッセイ以外の文書では適用強度を「弱」または「なし」とした。
-
-### 6. textlint
-
-- https://github.com/textlint/textlint
-- https://textlint.org/
-
-**反映**: 直接引用はしていない。決定的に検査できる表記・用語チェックを LLM に任せない、という役割分担の設計根拠として参照した。スキルは構造・論理・意味保持を担い、機械的な表記統一は静的検査に委ねる。
-
-### 7. Forest-Project-Lab / jp-writing-skills
-
-- https://github.com/Forest-Project-Lab/jp-writing-skills
-- 日本語の文章品質を検査する Claude Code 用プラグイン。設計根拠は `docs/DESIGN.md` にある。
-- ライセンス: MIT
-
-**反映**: このスキルとは独立に開発されたものだが、設計の骨格が一致していた。欠陥の検出と美的評価を分けること、確度によって〔指摘〕と〔助言〕を使い分けること、規則を検証可能性で階層化することの3点である。同じ結論に別経路で到達したことを、既存方針の裏づけとして扱う。
-
-音韻に関する判断を規則から外す根拠として、同リポジトリが引用する PhonologyBench を確認した。Suvarna, Khandelwal, Peng (2024) は、押韻語の生成で人間との差が 17 ポイント、音節数の計数で 45 ポイントあると報告している。リズムを固定ルールで規定しない方針を補強する。 https://arxiv.org/abs/2404.02456
-
-### 8. その他の日本語ライティング用スキル
-
-- https://github.com/sanoakr/ai-skills (`ja-proofreading`)
-- https://github.com/ultimatile/dotfiles (`.claude/skills/japanese-writing`)
-
-**反映**: 直接の採用はない。前者は検査を textlint に委譲する構成で、設計方針 4 と同じ役割分担を取る。後者は敬体・常体と句読点の選択を執筆前にユーザーへ確認して固定する手順を持つ。この手順は、文体の推定が結果を左右する場合の扱いとして再検討の余地がある。
-
-## 検証したが採用しなかった資料
-
-いずれも実在と書誌情報を確認した。文体を数量的に特徴づける研究であり、文章の欠陥を検出する目的には使えない。柴崎 (2014) が指摘する指標の限界と同じ理由による。
-
-- 「テキストの多様性をとらえる分類指標の体系化の試み (2)」言語処理学会年次大会 2012, P2-2. https://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/P2-2.pdf
-- 「小説における文体印象解析の試み」言語処理学会年次大会 2008, A2-1. https://www.anlp.jp/proceedings/annual_meeting/2008/pdf_dir/A2-1.pdf
-- 「統計分析からみた水村美苗著『続明暗』の文体模倣」計量国語学 32(1). https://www.jstage.jst.go.jp/article/mathling/32/1/32_19/_article/-char/ja/
-
+- 「テキストの多様性をとらえる分類指標の体系化の試み（2）」言語処理学会年次大会 2012, P2-2
+  https://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/P2-2.pdf
+- 「小説における文体印象解析の試み」言語処理学会年次大会 2008, A2-1
+  https://www.anlp.jp/proceedings/annual_meeting/2008/pdf_dir/A2-1.pdf
+- 「統計分析からみた水村美苗著『続明暗』の文体模倣」計量国語学 32(1)
+  https://www.jstage.jst.go.jp/article/mathling/32/1/32_19/_article/-char/ja/
