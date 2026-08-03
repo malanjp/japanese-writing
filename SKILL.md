@@ -24,7 +24,7 @@ description: 日本語の文章を、意味を変えずに明確で読みやす�
 - **他者の原稿を直す**: ユーザーが書いた文章、既存ドキュメント、受け取ったメールの推敲・校正
 - **自分の出力を直す**: Claude が日本語の長文を生成するとき、出力前に自己適用する
 
-自己適用の場合、生成AI特有の癖が診断対象の中心になる。[claude-tics.md](references/claude-tics.md) を参照し、少なくとも「冗長な機能表現」「空の前置き」「過剰な三項列挙」「言い換えだけのまとめ」の4点は必ず確認する。
+自己適用の場合、生成AI特有の癖が診断対象の中心になる。[claude-tics.md](references/claude-tics.md) を参照し、少なくとも「冗長な機能表現」「空の前置き」「過剰な三項列挙」「言い換えだけのまとめ」の4点は必ず確認する。あわせて [communication-clarity.md](references/communication-clarity.md) を参照し、少なくとも用語の導入（A）、参照と数量（D）、根拠・典拠（F）の3点は確認する。
 
 ## 編集ワークフロー
 
@@ -56,6 +56,8 @@ description: 日本語の文章を、意味を変えずに明確で読みやす�
 見出しがある文書、または段落が三つ以上ある文書では、[document-structure.md](references/document-structure.md) を参照し、少なくとも「結論の位置」「見出しと本文の対応」「一段落一主題」の3点を確認する。
 
 続いて、生成AIが書いた可能性のある文章では [claude-tics.md](references/claude-tics.md) の癖リストを当てる。人間の原稿でも、AI下書きを経由していれば同じ癖が出る。
+
+伝達上の欠陥（未定義の用語、単位や分母のない数値、出典のない断定、完了報告と実態の不一致など）も探す。詳細は [communication-clarity.md](references/communication-clarity.md) を参照する。
 
 文長、助詞の連続、文末の反復、漢字密度、読点の多さは補助的な警告にとどめる。単独では誤りと断定しない。
 
@@ -173,3 +175,4 @@ SNS、エッセイ、小説、日記では、断片文・省略・反復・常�
 - [references/document-structure.md](references/document-structure.md) — 文書全体の構成、見出し、段落の設計
 - [references/genre-guidance.md](references/genre-guidance.md) — 文書種別ごとの編集強度
 - [references/claude-tics.md](references/claude-tics.md) — 生成AI特有の日本語の癖と修正例
+- [references/communication-clarity.md](references/communication-clarity.md) — 用語導入、翻訳、根拠、作業報告などの伝達の明確さ
