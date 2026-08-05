@@ -17,8 +17,13 @@ japanese-writing/
 │   ├── claude-tics.md              # 生成AI特有の日本語の癖と修正例
 │   └── communication-clarity.md    # 用語導入、翻訳、根拠、作業報告などの伝達の明確さ
 └── docs/
-    ├── design-rationale.md         # 参考資料をどう設計に反映したか
-    └── document-structure-research.md  # 文書構成の規則の根拠と出典
+    ├── README.md                   # docs の目次
+    ├── design/                     # 設計の根拠・参考資料の反映記録
+    │   ├── rationale.md
+    │   └── document-structure-research.md
+    └── evals/                      # 効果検証レポートとフィクスチャ
+        ├── README.md
+        └── fixtures/
 ```
 
 ## インストール
@@ -87,8 +92,9 @@ git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-
 
 ## 参考資料
 
-各資料をスキルにどう反映したかは [docs/design-rationale.md](docs/design-rationale.md) に記載する。
-文書構成の規則の根拠は [docs/document-structure-research.md](docs/document-structure-research.md) にまとめた。
+各資料をスキルにどう反映したかは [docs/design/rationale.md](docs/design/rationale.md) に記載する。
+文書構成の規則の根拠は [docs/design/document-structure-research.md](docs/design/document-structure-research.md) にまとめた。
+効果検証は [docs/evals/](docs/evals/) を参照する。
 
 ### 日本語の文章規範
 
@@ -121,6 +127,9 @@ git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-
   https://github.com/ultimatile/dotfiles
 - mathbullet / skills（`ja-text-communication`）
   https://github.com/mathbullet/skills/blob/main/plugins/ja-text-communication/skills/ja-text-communication/SKILL.md
+- hardikpandya / stop-slop（MIT）
+  https://github.com/hardikpandya/stop-slop
+  AI 定型の除去。日本語で再現する構造パターンを `claude-tics.md` に取り込み済み
 
 ### 言語モデルの音韻能力
 

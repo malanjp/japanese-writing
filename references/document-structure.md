@@ -3,7 +3,7 @@
 文書全体の骨格を決めるときの規則。
 文や段落の内部については SKILL.md の「4. 書き換える」を参照する。
 
-根拠と出典は [docs/document-structure-research.md](../docs/document-structure-research.md) にまとめた。
+根拠と出典は [docs/design/document-structure-research.md](../docs/design/document-structure-research.md) にまとめた。
 
 ## 前提の確定
 

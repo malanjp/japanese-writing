@@ -1,6 +1,6 @@
 ---
 name: japanese-writing
-description: 日本語の文章を、意味を変えずに明確で読みやすく編集するスキル。You MUST invoke this skill BEFORE writing or editing any Japanese text longer than 3 sentences that will be shared with humans — Linear の Issue 起票 / コメント / follow-up、GitHub の PR タイトル / description / レビュー返信、docs/ 配下の Markdown、ADR、README、仕様書、報告書、リリースノート、業務メール、Slack への長文、解説記事、SNS 文の作成・推敲・校正・リライトを含む。他者の原稿を直す依頼（「推敲して」「校正して」「てにをはを直して」「読みやすくして」「この文章どう？」「日本語で書いて」proofread / rewrite in Japanese）でも、スキル名が明示されなくても必ず参照する。Claude 自身が日本語の長文を出力する前にも参照し、翻訳調・冗長な定型表現・過剰な列挙・空の前置き・言い換えだけのまとめといった生成 AI 特有の癖を避ける。構造、論理、係り受け、用語、表記を改善し、確定的な指摘と文脈依存の助言を分ける。短い返答・単文の確認質問・コード / コマンド出力・体言止めの原始人モード応答には不要。
+description: 日本語の文章を、意味を変えずに明確で読みやすく編集するスキル。You MUST invoke this skill BEFORE writing or editing any Japanese text longer than 3 sentences that will be shared with humans — Linear の Issue 起票 / コメント / follow-up、GitHub の PR タイトル / description / レビュー返信、docs/ 配下の Markdown、ADR、README、仕様書、報告書、リリースノート、業務メール、Slack への長文、解説記事、SNS 文の作成・推敲・校正・リライトを含む。他者の原稿を直す依頼（「推敲して」「校正して」「てにをはを直して」「読みやすくして」「この文章どう？」「日本語で書いて」proofread / rewrite in Japanese）でも、スキル名が明示されなくても必ず参照する。Claude 自身が日本語の長文を出力する前にも参照し、翻訳調・冗長な定型表現・過剰な列挙・空の前置き・言い換えだけのまとめ・二項対立の定型・偽の行為者といった生成 AI 特有の癖を避ける。構造、論理、係り受け、用語、表記を改善し、確定的な指摘と文脈依存の助言を分ける。短い返答・単文の確認質問・コード / コマンド出力・体言止めの原始人モード応答には不要。
 ---
 
 # 日本語文章作成
@@ -24,7 +24,7 @@ description: 日本語の文章を、意味を変えずに明確で読みやす�
 - **他者の原稿を直す**: ユーザーが書いた文章、既存ドキュメント、受け取ったメールの推敲・校正
 - **自分の出力を直す**: Claude が日本語の長文を生成するとき、出力前に自己適用する
 
-自己適用の場合、生成AI特有の癖が診断対象の中心になる。[claude-tics.md](references/claude-tics.md) を参照し、少なくとも「冗長な機能表現」「空の前置き」「過剰な三項列挙」「言い換えだけのまとめ」の4点は必ず確認する。あわせて [communication-clarity.md](references/communication-clarity.md) を参照し、少なくとも用語の導入（A）、参照と数量（D）、根拠・典拠（F）の3点は確認する。
+自己適用の場合、生成AI特有の癖が診断対象の中心になる。[claude-tics.md](references/claude-tics.md) を参照し、少なくとも「冗長な機能表現」「空の前置き」「過剰な三項列挙」「言い換えだけのまとめ」「二項対立の定型」「偽の行為者」の6点は必ず確認する。あわせて [communication-clarity.md](references/communication-clarity.md) を参照し、少なくとも用語の導入（A）、参照と数量（D）、根拠・典拠（F）の3点は確認する。
 
 ## 編集ワークフロー
 
@@ -103,16 +103,22 @@ description: 日本語の文章を、意味を変えずに明確で読みやす�
 **例2: 過剰な三項列挙**
 
 - 原文: 本機能は、開発効率を向上させ、品質を高め、チームの生産性を最大化します。
-- 修正: 本機能はレビュー待ち時間を短縮し、結果として開発のリードタイムを縮める。
-- 注: 中身が重複する三つ並べを、検証できる一つの主張に置き換えている。数を揃えるために項目を足さない。
+- 修正: （原文に検証できる差分がないため削除）
+- 注: 同義の三つ並べは〔助言〕に残さず修正文から消す。固有の変化が原文にあれば、検証できる項目だけ残す。数を揃えるために項目を足さない。
 
-**例3: 係り受けの曖昧さ（意味を変えないまま分割）**
+**例3: 二項対立の定型**
+
+- 原文: ボトルネックはインフラではない。レビュー待ちだ。そこにこそ改善の本質がある。
+- 修正: ボトルネックはレビュー待ちである。
+- 注: 「X ではない。Y だ」の転換演出をやめ、主張側だけを残す。
+
+**例4: 係り受けの曖昧さ（意味を変えないまま分割）**
 
 - 原文: 障害発生時に管理者が承認していない設定変更を含むデプロイをロールバックする。
 - 修正: 障害が発生した場合、管理者の承認を経ていない設定変更を含むデプロイを、ロールバック対象とする。
 - 注: 「管理者が承認していない」の係り先が二通りに読めるため、原文の意図を確認できないときは修正せず〔指摘〕として出す。
 
-**例4: 意味を変えてしまう悪い修正**
+**例5: 意味を変えてしまう悪い修正**
 
 - 原文: 障害が再発する可能性があるため、監視の追加を推奨します。
 - 悪い修正: 障害が再発するため、監視を追加してください。
@@ -174,5 +180,5 @@ SNS、エッセイ、小説、日記では、断片文・省略・反復・常�
 
 - [references/document-structure.md](references/document-structure.md) — 文書全体の構成、見出し、段落の設計
 - [references/genre-guidance.md](references/genre-guidance.md) — 文書種別ごとの編集強度
-- [references/claude-tics.md](references/claude-tics.md) — 生成AI特有の日本語の癖と修正例
+- [references/claude-tics.md](references/claude-tics.md) — 生成AI特有の日本語の癖と修正例（stop-slop 由来の構造パターンを含む）
 - [references/communication-clarity.md](references/communication-clarity.md) — 用語導入、翻訳、根拠、作業報告などの伝達の明確さ
