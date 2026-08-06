@@ -33,17 +33,22 @@ japanese-writing/
 
 ### 方法1: Claude Code プラグイン（フック付き・推奨）
 
-リポジトリを marketplace に追加するか、開発中はローカルパスで読み込む。
+このリポジトリ自体が marketplace カタログ（`.claude-plugin/marketplace.json`）を持つ。Claude Code 内で:
 
-```bash
-# 一時利用
-claude --plugin-dir /path/to/japanese-writing
-
-# または marketplace 経由（公開後）
-# /plugin install japanese-writing
+```text
+/plugin marketplace add malanjp/japanese-writing
+/plugin install japanese-writing@japanese-writing
 ```
 
-プラグイン導入後、セッション開始時に既定モード `watch`（ゲート監視）が有効になる。フル `SKILL.md` は常時注入しない。日本語長文や推敲依頼を検知したときだけ短いリマインダを足す。
+導入後、セッション開始時に既定モード `watch`（ゲート監視）が有効になる。フル `SKILL.md` は常時注入しない。日本語長文・推敲依頼・PR 説明作成を検知したときだけ短いリマインダを足す。
+
+開発中の一時利用:
+
+```bash
+claude --plugin-dir /path/to/japanese-writing
+```
+
+公式プラグインディレクトリ（全ユーザー向け）へ載せる場合は、公開リポジトリを前提に [Console の提出フォーム](https://platform.claude.com/plugins/submit) か [claude.ai の提出フォーム](https://claude.ai/admin-settings/directory/submissions/plugins/new) から申請する。提出前に `claude plugin validate . --strict` で検証する。
 
 ### 方法2: skills CLI（従来どおり）
 
