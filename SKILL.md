@@ -1,6 +1,6 @@
 ---
 name: japanese-writing
-description: 日本語の文章を、意味を変えずに明確で読みやすく編集するスキル。You MUST invoke this skill BEFORE writing or editing any Japanese text longer than 3 sentences that will be shared with humans — Linear の Issue 起票 / コメント / follow-up、GitHub の PR タイトル / description / レビュー返信、docs/ 配下の Markdown、ADR、README、仕様書、報告書、リリースノート、業務メール、Slack への長文、解説記事、SNS 文の作成・推敲・校正・リライトを含む。他者の原稿を直す依頼（「推敲して」「校正して」「てにをはを直して」「読みやすくして」「この文章どう？」「日本語で書いて」proofread / rewrite in Japanese）でも、スキル名が明示されなくても必ず参照する。Claude 自身が日本語の長文を出力する前にも参照し、翻訳調・冗長な定型表現・過剰な列挙・空の前置き・言い換えだけのまとめ・二項対立の定型・偽の行為者といった生成 AI 特有の癖を避ける。構造、論理、係り受け、用語、表記を改善し、確定的な指摘と文脈依存の助言を分ける。短い返答・単文の確認質問・コード / コマンド出力・体言止めの原始人モード応答には不要。
+description: 日本語の文章を、意味を変えずに明確で読みやすく編集するスキル。You MUST invoke this skill BEFORE writing or editing any Japanese text longer than 3 sentences that will be shared with humans — Linear の Issue 起票 / コメント / follow-up、GitHub の PR タイトル / description / レビュー返信、docs/ 配下の Markdown、ADR、README、仕様書、報告書、リリースノート、業務メール、Slack への長文、解説記事、SNS 文の作成・推敲・校正・リライトを含む。他者の原稿を直す依頼（「推敲して」「校正して」「てにをはを直して」「読みやすくして」「この文章どう？」「日本語で書いて」proofread / rewrite in Japanese）でも、スキル名が明示されなくても必ず参照する。Claude 自身が日本語の長文を出力する前にも参照し、翻訳調・冗長な定型表現・過剰な列挙・空の前置き・言い換えだけのまとめ・二項対立の定型・偽の行為者・平坦な密度といった生成 AI 特有の癖を避ける。長文では結論位置・既知から新情報・チャンク化など認知しやすい順序も整える。構造、論理、係り受け、用語、表記を改善し、確定的な指摘と文脈依存の助言を分ける。短い返答・単文の確認質問・コード / コマンド出力・体言止めの原始人モード応答には不要。
 ---
 
 # 日本語文章作成
@@ -24,7 +24,15 @@ description: 日本語の文章を、意味を変えずに明確で読みやす�
 - **他者の原稿を直す**: ユーザーが書いた文章、既存ドキュメント、受け取ったメールの推敲・校正
 - **自分の出力を直す**: Claude が日本語の長文を生成するとき、出力前に自己適用する
 
-自己適用の場合、生成AI特有の癖が診断対象の中心になる。[claude-tics.md](references/claude-tics.md) を参照し、少なくとも「冗長な機能表現」「空の前置き」「過剰な三項列挙」「言い換えだけのまとめ」「二項対立の定型」「偽の行為者」の6点は必ず確認する。あわせて [communication-clarity.md](references/communication-clarity.md) を参照し、少なくとも用語の導入（A）、参照と数量（D）、根拠・典拠（F）の3点は確認する。
+自己適用の場合、次の順で整える。診断過程は出力しない。
+
+1. 事実・意味・条件を守る
+2. 認知順序（構造）。見出しがある、または段落が三つ以上なら [document-structure.md](references/document-structure.md) の「AI長文で欠けやすい認知順序」を含む構成チェック
+3. 生成AI特有の癖。[claude-tics.md](references/claude-tics.md) を参照し、少なくとも「冗長な機能表現」「空の前置き」「過剰な三項列挙」「言い換えだけのまとめ」「二項対立の定型」「偽の行為者」「平坦な密度」の7点は確認する
+4. 文書種別が解説記事・ブログのときだけ、[genre-guidance.md](references/genre-guidance.md) の平坦さ（緩急）の〔助言〕
+5. 文長・文末の微調整（工程5）
+
+あわせて [communication-clarity.md](references/communication-clarity.md) を参照し、少なくとも用語の導入（A）、参照と数量（D）、根拠・典拠（F）の3点は確認する。読みやすくするために原文にない問いや緊張を新造しない。
 
 ## 編集ワークフロー
 
@@ -53,7 +61,16 @@ description: 日本語の文章を、意味を変えずに明確で読みやす�
 - 不要な重複、二重否定、翻訳調、文体混在がある
 - 箇条書きにした方が構造を示せる並列情報を詰め込んでいる
 
-見出しがある文書、または段落が三つ以上ある文書では、[document-structure.md](references/document-structure.md) を参照し、少なくとも「結論の位置」「見出しと本文の対応」「一段落一主題」の3点を確認する。
+見出しがある文書、または段落が三つ以上ある文書では、[document-structure.md](references/document-structure.md) を参照し、少なくとも次を確認する。
+
+- 結論の位置（末尾の「結論として」に施策・数値がまとまっていないか）
+- 見出しと本文の対応
+- 一段落一主題
+- 順序基準が一つに保たれているか（演繹・時系列・構造・重要度の混在）
+- 既知→新情報（文頭で前を受け、文末に新情報）
+- チャンク化（一段落の論点過多、見出しなしで論点が並びすぎ）
+
+詳細と直し方は同ファイルの「AI長文で欠けやすい認知順序」を正本とする。Markdown 形式の文書では、同ファイルの「Markdown で書く場合の可視化改行」節も併せて確認する。ソース上の単一改行はレンダリングで消えるため、可視化改行は空行 (段落分割) で行う。
 
 続いて、生成AIが書いた可能性のある文章では [claude-tics.md](references/claude-tics.md) の癖リストを当てる。人間の原稿でも、AI下書きを経由していれば同じ癖が出る。
 
@@ -73,14 +90,14 @@ description: 日本語の文章を、意味を変えずに明確で読みやす�
 
 ### 5. リズムを調整する
 
-構造上の問題を直した後に限り、次を必要な箇所だけ行う。
+構造上の問題を直した後に限り、次を必要な箇所だけ行う。解説記事・ブログでは、その前に [genre-guidance.md](references/genre-guidance.md) の平坦さチェックを〔助言〕として検討する。
 
 - 極端に長い文を分ける
 - 短い断片文が連続する場合だけ結合を検討する
 - 不自然な文末反復や接続詞の連続を減らす
 - 強調したい文を短くする
 
-「長文と短文を交互にする」「同じ文末を一定回数で禁止する」「体言止めを足す」といった固定ルールは使わない。
+「長文と短文を交互にする」「同じ文末を一定回数で禁止する」「体言止めを足す」といった固定ルールは使わない。平坦さは演出の追加ではなく、具体への着地や段落分割で直す。
 
 ### 6. 意味を検証する
 
@@ -178,7 +195,7 @@ SNS、エッセイ、小説、日記では、断片文・省略・反復・常�
 
 ## 参照ファイル
 
-- [references/document-structure.md](references/document-structure.md) — 文書全体の構成、見出し、段落の設計
-- [references/genre-guidance.md](references/genre-guidance.md) — 文書種別ごとの編集強度
-- [references/claude-tics.md](references/claude-tics.md) — 生成AI特有の日本語の癖と修正例（stop-slop 由来の構造パターンを含む）
+- [references/document-structure.md](references/document-structure.md) — 文書全体の構成、見出し、段落の設計（AI長文の認知順序を含む）
+- [references/genre-guidance.md](references/genre-guidance.md) — 文書種別ごとの編集強度（解説記事の平坦さ〔助言〕を含む）
+- [references/claude-tics.md](references/claude-tics.md) — 生成AI特有の日本語の癖と修正例（stop-slop・平坦な密度を含む）
 - [references/communication-clarity.md](references/communication-clarity.md) — 用語導入、翻訳、根拠、作業報告などの伝達の明確さ

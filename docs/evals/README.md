@@ -43,3 +43,6 @@ evals/
 |---|---|
 | [2026-08-06-stop-slop.md](2026-08-06-stop-slop.md) | stop-slop 取り込み後の短文 12 ケース |
 | [2026-08-06-stop-slop-longform.md](2026-08-06-stop-slop-longform.md) | 同、長文パイロット報告（約 1,200 字） |
+| [2026-08-06-cognitive-flow.md](2026-08-06-cognitive-flow.md) | 認知順序・平坦さの長文（解説記事・短め） |
+| [2026-08-06-cognitive-flow-100lines.md](2026-08-06-cognitive-flow-100lines.md) | 同、約100行（101行 / 約2,300字） |
+| [2026-08-06-spec-design-doc.md](2026-08-06-spec-design-doc.md) | 設計書・仕様書パターン（79行） |

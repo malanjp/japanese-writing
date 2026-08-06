@@ -8,31 +8,52 @@
 
 ```text
 japanese-writing/
-├── SKILL.md                        # 編集ワークフロー、出力モード、安全上の境界
-├── README.md                       # このファイル。概要、インストール、使い方、使用例、参考資料
-├── CLAUDE.md                       # スキル開発・保守用。設計方針、既知の課題
+├── SKILL.md                        # 規則の正本。編集ワークフロー、出力モード、安全上の境界
+├── README.md                       # このファイル
+├── CLAUDE.md                       # スキル開発・保守用
+├── .claude-plugin/plugin.json      # Claude Code プラグイン定義（フック登録）
+├── commands/japanese-writing.md    # /japanese-writing モード切替
+├── hooks/                          # SessionStart / UserPromptSubmit
+├── rules/japanese-writing-anchor.md # フック注入用の短い要約（正本ではない）
+├── skills/japanese-writing/SKILL.md # プラグイン入口（ルート SKILL.md へ委譲）
 ├── references/
-│   ├── document-structure.md       # 文書全体の構成、見出し、段落の設計
-│   ├── genre-guidance.md           # 文書種別ごとの編集強度
-│   ├── claude-tics.md              # 生成AI特有の癖（stop-slop 由来の構造パターンを含む）
-│   └── communication-clarity.md    # 用語導入、翻訳、根拠、作業報告などの伝達の明確さ
+│   ├── document-structure.md
+│   ├── genre-guidance.md
+│   ├── claude-tics.md
+│   └── communication-clarity.md
 └── docs/
-    ├── README.md                   # docs の目次
-    ├── design/                     # 設計の根拠・参考資料の反映記録
-    └── evals/                      # 効果検証レポートとフィクスチャ
+    ├── README.md
+    ├── design/
+    └── evals/
 ```
+
+規則本文の正本はルートの `SKILL.md` と `references/` のみ。`skills/` 配下と `rules/` のアンカーへ規則を複製しない。
 
 ## インストール
 
-[skills CLI](https://github.com/vercel-labs/skills) を使う。`-g` を付けると `~/.claude/skills/` に入り、すべてのプロジェクトで使える。
+### 方法1: Claude Code プラグイン（フック付き・推奨）
+
+リポジトリを marketplace に追加するか、開発中はローカルパスで読み込む。
+
+```bash
+# 一時利用
+claude --plugin-dir /path/to/japanese-writing
+
+# または marketplace 経由（公開後）
+# /plugin install japanese-writing
+```
+
+プラグイン導入後、セッション開始時に既定モード `watch`（ゲート監視）が有効になる。フル `SKILL.md` は常時注入しない。日本語長文や推敲依頼を検知したときだけ短いリマインダを足す。
+
+### 方法2: skills CLI（従来どおり）
+
+[skills CLI](https://github.com/vercel-labs/skills) を使う。`-g` を付けると `~/.claude/skills/` に入り、すべてのプロジェクトで使える。フックは付かない。
 
 ```bash
 npx skills add malanjp/japanese-writing -g -a claude-code
 ```
 
 特定のリポジトリでだけ使う場合は `-g` を外す。そのリポジトリの `.claude/skills/` に入る。
-
-更新と削除も CLI から行える。
 
 ```bash
 npx skills update japanese-writing
@@ -55,13 +76,49 @@ git clone git@github.com:malanjp/japanese-writing.git ~/.claude/skills/japanese-
 - 「てにをはを直して」
 - 「読みやすくして」
 
-出力モードは 3 段階ある。指定しなければ `review` になる。
+プラグイン利用時は次でも切替できる。
+
+```text
+/japanese-writing           # review でロック（毎ターン短リマインダ）
+/japanese-writing quick
+/japanese-writing strict
+/japanese-writing watch     # ゲート監視に戻す（既定）
+/japanese-writing off       # 完全停止
+```
+
+自然言語では「japanese-writing やめて」「推敲モード解除」で `off` になる。
+
+### フックのモード
+
+| モード | 動作 |
+|--------|------|
+| `watch` | 既定。推敲依頼、PR 説明 / Issue 作成、日本語長文の生成・編集っぽい発話のときだけ短リマインダ |
+| `quick` / `review` / `strict` | 明示ロック。毎ターン短リマインダ。出力形式は既存の出力モードと同じ |
+| `off` | 注入なし |
+
+既定モードの上書き（任意）:
+
+```bash
+export JAPANESE_WRITING_DEFAULT_MODE=watch   # watch | quick | review | strict | off
+```
+
+または `~/.config/japanese-writing/config.json`:
+
+```json
+{ "defaultMode": "watch" }
+```
+
+状態フラグは `~/.claude/.japanese-writing-active`。チャット口調の圧縮は genshijin、共有される日本語本文の編集基準は japanese-writing。
+
+### 出力モード
+
+指定しなければ `review` になる。
 
 - `quick`: 修正文のみ。必要なら短い注意を一つ添える
 - `review`: 修正文、確定的な指摘、任意の助言、意味保持チェック
 - `strict`: 原文の不明点、保護対象、変更差分、警告。意味が変わり得る箇所は修正せず確認事項にする
 
-契約文や障害対応手順など安全上の境界に該当する文書と、読み手が内容を根拠に取り消しにくい判断を行う文書は、指定がなくても `strict` になる。数値を引用するだけの技術記事や社内の週報は該当しない。これらの文書で `quick` を指定した場合も、意味に関わる警告は添える。
+契約文や障害対応手順など安全上の境界に該当する文書と、読み手が内容を根拠に取り消しにくい判断を行う文書は、指定がなくても `strict` になる。数値を引用するだけの技術記事や社内の週報は該当しない。これらの文書で `quick` を指定した場合も、意味に関わる警告は添える。`strict` の文書性質判定はフックではなく `SKILL.md` 側で行う。
 
 ## 使用例
 
