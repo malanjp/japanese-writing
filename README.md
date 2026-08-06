@@ -48,7 +48,7 @@ japanese-writing/
 claude --plugin-dir /path/to/japanese-writing
 ```
 
-公式プラグインディレクトリ（全ユーザー向け）へ載せる場合は、公開リポジトリを前提に [Console の提出フォーム](https://platform.claude.com/plugins/submit) か [claude.ai の提出フォーム](https://claude.ai/admin-settings/directory/submissions/plugins/new) から申請する。提出前に `claude plugin validate . --strict` で検証する。
+公式プラグインディレクトリ（全ユーザー向け）へ載せる場合は、公開リポジトリが前提となる。[Console の提出フォーム](https://platform.claude.com/plugins/submit) か [claude.ai の提出フォーム](https://claude.ai/admin-settings/directory/submissions/plugins/new) から申請する。提出前に `claude plugin validate . --strict` で検証する。
 
 ### 方法2: skills CLI（従来どおり）
 
@@ -58,7 +58,7 @@ claude --plugin-dir /path/to/japanese-writing
 npx skills add malanjp/japanese-writing -g -a claude-code
 ```
 
-特定のリポジトリでだけ使う場合は `-g` を外す。そのリポジトリの `.claude/skills/` に入る。
+特定のリポジトリだけで使う場合は `-g` を外す。そのリポジトリの `.claude/skills/` に入る。
 
 ```bash
 npx skills update japanese-writing
@@ -123,7 +123,7 @@ export JAPANESE_WRITING_DEFAULT_MODE=watch   # watch | quick | review | strict |
 - `review`: 修正文、確定的な指摘、任意の助言、意味保持チェック
 - `strict`: 原文の不明点、保護対象、変更差分、警告。意味が変わり得る箇所は修正せず確認事項にする
 
-契約文や障害対応手順など安全上の境界に該当する文書と、読み手が内容を根拠に取り消しにくい判断を行う文書は、指定がなくても `strict` になる。数値を引用するだけの技術記事や社内の週報は該当しない。これらの文書で `quick` を指定した場合も、意味に関わる警告は添える。`strict` の文書性質判定はフックではなく `SKILL.md` 側で行う。
+契約文や障害対応手順など安全上の境界に該当する文書と、読み手が内容を根拠に、取り消しにくい判断を行う文書は、指定がなくても `strict` になる。数値を引用するだけの技術記事や社内の週報は該当しない。これらの文書で `quick` を指定した場合も、意味に関わる警告は添える。`strict` の文書性質判定はフックではなく `SKILL.md` 側で行う。
 
 ## 使用例
 
@@ -140,7 +140,7 @@ export JAPANESE_WRITING_DEFAULT_MODE=watch   # watch | quick | review | strict |
 **指摘と助言**
 
 ```text
-〔指摘〕「大幅に」の程度を裏づける計測値が原文にない。改善幅を示すか、示せなければ「改善した」に直す。原文だけでは判断が付かないため修正文では変更していない
+〔指摘〕「大幅に」の程度を裏づける計測値が原文にない。改善幅を示すか、示せなければ「改善した」に直す。原文だけでは判断が付かないため、修正文では「大幅に」を残している
 〔指摘〕「先日」は読み手によって指す日が変わる。実施日に置き換える。日付が原文にないため補っていない
 〔助言〕「ご報告させていただきます」は冗長。「報告します」で足りる
 ```
